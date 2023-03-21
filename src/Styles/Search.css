@@ -1,9 +1,14 @@
+/* *{
+    outline:1px solid red;
+} */
 #search {
     background-color: #969292;
     padding: 20px;
     padding-bottom: 0 0 80px 0;
     margin-bottom: 20px;
+    min-height: 100vh;
 }
+
 /* Styles for form container */
 .form-container {
     display: flex;
@@ -64,28 +69,27 @@ input[type="datetime-local"]:focus {
 }
 
 /* Styles for button */
-button {
+.modal-footer button {
     padding: 0.5rem 1rem;
     font-size: 1rem;
     border: none;
     border-radius: 5px;
     color: white;
-    background-color: #3b82f6;
+    background-color: black;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
 }
 
-/* Styles for button when hovered */
-button:hover {
+.modal-footer button:hover {
     background-color: #2563eb;
 }
 
-/* Styles for button when disabled */
-button:disabled {
+.modal-footer button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
-/* Keyframe animation for button */
+
+
 @keyframes button-clicked {
     0% {
         transform: scale(1);
@@ -101,9 +105,9 @@ button:disabled {
 }
 
 /* Styles for button when clicked */
-button:active {
+/* .modal-footer button:active {
     animation: button-clicked 0.2s ease-in-out;
-}
+} */
 
 
 .capsules-card-container {
@@ -121,11 +125,11 @@ button:active {
 }
 
 
-.modal {
+/* .modal {
     border: 10px solid greenyellow;
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
     width: 50%;
     height: 50%;
     display: flex;
@@ -169,7 +173,7 @@ button:active {
 
 .blur {
     filter: blur(5px);
-}
+} */
 
 
 .card {
@@ -189,7 +193,7 @@ button:active {
 
 .view-button {
     position: absolute;
-    bottom: 5px;
+    bottom: 15px;
     right: 35%;
     padding: 5px 10px;
     background-color: white;
@@ -204,9 +208,10 @@ button:active {
     background-position: top;
     transition: background-position 0.2s ease-in-out;
 }
-.view-button:hover{
- background-position: bottom;
- color: white;
+
+.view-button:hover {
+    background-position: bottom;
+    color: white;
 }
 
 
@@ -235,7 +240,8 @@ button:active {
 .card {
     background-color: #224c6e;
     color: white;
-    padding: 20px;
+    padding: 40px;
+    border: 1px solid orange;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease-in-out;
@@ -243,8 +249,8 @@ button:active {
 
 .card:hover {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    /* transform: scale(1.2); */
-    /* transition: all 0.3s ease-in-out; */
+    transform: scale(1.2);
+    transition: all 0.3s ease-in-out;
     opacity: 0.8;
 }
 

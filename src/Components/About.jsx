@@ -1,5 +1,6 @@
 import React from 'react'
 import '../Styles/About.css'
+import Footer from './Footer'
 function About() {
   return (
     <div className="about-container" id='about'>
@@ -17,6 +18,7 @@ function About() {
         <li>First privately funded company to launch a spacecraft into orbit around the Sun (2018)</li>
         <li>First privately funded company to send humans to space and return them safely to Earth (2020)</li>
       </ul>
+      <Footer />
     </div>
   )
 }

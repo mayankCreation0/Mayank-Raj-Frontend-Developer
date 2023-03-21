@@ -7,6 +7,7 @@ import {
     InputGroup,
     Heading,
     useToast,
+    Spinner,
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -24,6 +25,7 @@ const SignupPage = () => {
         Username: "",
         password: "",
     });
+    const [loading, setLoading] = useState(false);
     const toast = useToast();
     const [showPassword, setShowPassword] = useState(false);
     const handleChange = (e) => {
@@ -39,6 +41,7 @@ const SignupPage = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
+            setLoading(true);
             const res = await axios.post(
                 "https://fantastic-hen-cloak.cyclic.app/signup",
                 input
@@ -55,6 +58,7 @@ const SignupPage = () => {
                         navigate('/');
                     }
                 })
+                setLoading(false)
                 // fnauthstate();
             }
             else if (res.status === 400) {
@@ -153,9 +157,9 @@ const SignupPage = () => {
                     </FormControl>
 
                     <button className="stylish-button" type="submit">
-                        signup
+                        signup {loading ? <Spinner /> : null}
                     </button>
-                    <Link to='/login'><button class="already-button">
+                    <Link to='/login'><button class="already-button" >
                         Already have a account
                     </button></Link>
                 </form>

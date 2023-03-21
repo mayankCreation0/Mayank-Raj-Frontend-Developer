@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import '../Styles/Banner.css';
-import About from "./About"
-import Search from './Search'
 
 const Banner = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -53,7 +51,7 @@ const Banner = () => {
 
     return (
         <>
-            <div className="banner">
+            <div className="banner" id='banner'>
                 {images.map((currentBanner, index) => (
                     // eslint-disable-next-line jsx-a11y/img-redundant-alt, react/jsx-no-comment-textnodes
                     <div className='banner-main'>

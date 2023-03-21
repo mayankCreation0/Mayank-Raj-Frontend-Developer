@@ -1,4 +1,6 @@
-import { Button, useToast ,Heading } from '@chakra-ui/react'
+import {
+  Button, useToast, Heading, Box, useDisclosure, ModalOverlay, Modal, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Text, Stack, Alert, Spinner,
+} from '@chakra-ui/react'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../Context/Context';
@@ -8,6 +10,7 @@ import '../Styles/Search.css'
 
 const Search = () => {
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { auth } = useContext(Context);
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -16,13 +19,13 @@ const Search = () => {
   const [datalength, setDatalength] = useState(0);
   const [selectedOption, setSelectedOption] = useState('');
   const [value, setValue] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCapsule, setSelectedCapsule] = useState(null);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [selectedCapsule, setSelectedCapsule] = useState(null);
 
-  const openModal = (capsule) => {
-    setSelectedCapsule(capsule);
-    setIsModalOpen(true);
-  };
+  // const openModal = (capsule) => {
+  //   setSelectedCapsule(capsule);
+  //   setIsModalOpen(true);
+  // };
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
@@ -44,7 +47,7 @@ const Search = () => {
 
   useEffect(() => {
     display();
-  }, [])
+  }, [auth])
 
   const datetime = (e) => {
     let utcDateString = DateTime.fromISO(e.target.value, { zone: "utc" });
@@ -66,10 +69,11 @@ const Search = () => {
         setDatalength(data.length);
       })
       .catch((error) => {
-
+        Alert(error)
       });
   };
   const checkauth = (e) => {
+    e.preventDefault();
     if (auth) {
       handleSubmit(e);
     }
@@ -84,6 +88,7 @@ const Search = () => {
       navigate("/login");
     }
   }
+
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
   const paginateData = data.slice(firstPostIndex, lastPostIndex);
@@ -92,7 +97,7 @@ const Search = () => {
       <Heading>Search</Heading>
       <>
         <div className='capsule-container'>
-          <form className="form-container" onSubmit={handleSubmit}>
+          <form className="form-container" onSubmit={(e) => checkauth(e)}>
             <label htmlFor="select-option">Filter by:</label>
             <select id="select-option" value={selectedOption} onChange={handleSelectChange}>
               <option value="">--Select an option--</option>
@@ -105,7 +110,7 @@ const Search = () => {
               <div className="input-container">
                 <label htmlFor="original_launch-input">Launch Date:</label>
                 <input type="datetime-local" id="original_launch-input" onChange={(e) => datetime(e)} />
-                <Button type='submit' colorScheme={'messenger'} className='btn-card' onClick={(e)=>checkauth(e)}>
+                <Button type='submit' colorScheme={'messenger'} className='btn-card' >
                   Submit
                 </Button>
 
@@ -115,7 +120,7 @@ const Search = () => {
               <div className="input-container">
                 <label htmlFor="status-input">Status:</label>
                 <input type="text" id="original_launch-input" onChange={(e) => setValue(e.target.value)} />
-                <Button type='submit' colorScheme={'messenger'} className='btn-card' onClick={(e) => checkauth(e)}>
+                <Button type='submit' colorScheme={'messenger'} className='btn-card' >
                   Submit
                 </Button>
 
@@ -125,7 +130,7 @@ const Search = () => {
               <div className="input-container">
                 <label htmlFor="type-input">Type:</label>
                 <input type="text" id="original_launch-input" onChange={(e) => setValue(e.target.value)} />
-                <Button type='submit' colorScheme={'messenger'} className='btn-card' onClick={(e) => checkauth(e)}>
+                <Button type='submit' colorScheme={'messenger'} className='btn-card' >
                   Submit
                 </Button>
 
@@ -146,8 +151,8 @@ const Search = () => {
                       <p>Original_launch: {el.original_launch}</p>
                       <p>Landings: {el.landings}</p>
                       <p>Type: {el.type}</p>
-                      <div className="view-button" onClick={() => openModal(true)}>View Details</div>
-                      {isModalOpen && (
+                      <div className="view-button" onClick={onOpen}>View Details</div>
+                      {/* {isModalOpen && (
                         <div className="modal">
                           <div className="modal-content">
                             <span className="modal-close" onClick={() => setIsModalOpen(false)}>
@@ -170,13 +175,62 @@ const Search = () => {
                             )}
                           </div>
                         </div>
-                      )}
+                      )
+                      } */}
+                      <Box>
+                        <Modal isOpen={isOpen} onClose={onClose} isCentered >
+                          <ModalOverlay style={{ backgroundColor: "transparent", backdropFilter: "blur(4px)", border: "1px solid red" }} />
+                          <ModalContent
+                            backgroundColor="white"
+                            borderRadius="md"
+                            boxShadow="md"
+                            maxW="sm"
+                            w="full"
+                            zIndex="modal"
+                          >
+                            <ModalHeader fontWeight="bold" textAlign="center">
+                              Capsule Details
+                            </ModalHeader>
+                            <ModalCloseButton />
+                            <ModalBody>
+                              <Text fontWeight="bold" mb={2}>
+                                capsule_serial:- {el.capsule_serial}
+                              </Text>
+                              <Stack spacing={2} mb={2}>
+                                <Text>
+                                  Capsule_id: <span>{el.capsule_id}</span>
+                                </Text>
+                                <Text>
+                                  Status: <span>{el.status}</span>
+                                </Text>
+                                <Text>
+                                  Original_launch: <span>{el.original_launch}</span>
+                                </Text>
+                                <Text>
+                                  Landings: <span>{el.landings}</span>
+                                </Text>
+                                <Text>
+                                  Type: <span>{el.type}</span>
+                                </Text>
+                              </Stack>
+                              <Button
+                                colorScheme="blue"
+                                onClick={onClose}
+                                width="full"
+                              >
+                                Close
+                              </Button>
+                            </ModalBody>
+                          </ModalContent>
+                        </Modal>
+                      </Box>
+
 
                     </div>
 
                   )
                 })
-                : !auth ?  "waiting for u to login..." : "Loading..."
+                : !auth ? "waiting for u to login..." : <Spinner />
               }
             </div>
           </div>
@@ -189,7 +243,7 @@ const Search = () => {
           currentPage={currentPage}
         />
       </>
-    </div>
+    </div >
   )
 }
 
