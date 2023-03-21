@@ -1,0 +1,37 @@
+#about {
+    scroll-behavior: smooth;
+}
+.about-container {
+    background-color: rgb(254, 189, 189);
+    height: 100vh;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.about-title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.about-description {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.about-subtitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.about-list {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.about-list li {
+    margin-bottom: 10px;
+}
